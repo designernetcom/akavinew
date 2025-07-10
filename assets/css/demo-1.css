@@ -2544,8 +2544,8 @@ i.msicon.msi-star.fill {
 .ms-product-inner {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  border: 1px solid #eee;
-  border-radius: 3px;
+  border: 1px solid #cdcccc;
+  border-radius: 9px;
   cursor: pointer;
   overflow: hidden;
 }
@@ -2764,10 +2764,13 @@ i.msicon.msi-star.fill {
 }
 .ms-product-inner .ms-pro-content .ms-pro-stitle {
   padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
   font-weight: 600;
   color: #3e9172;
-  font-size: 12px;
+  font-size: 15px;
   text-transform: uppercase;
 }
 .ms-product-inner .ms-pro-content .ms-pro-rat-price {
@@ -3473,12 +3476,13 @@ i.msicon.msi-star.fill {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  align-items: center;
   text-decoration: none;
   color: #17181c;
   width: auto;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
+         justify-content: center;
 }
 .ms-header-bottons .ms-header-btn:not(:last-child) {
   margin-right: 30px;
@@ -5869,7 +5873,7 @@ body.ms-menu-open:before {
 .ms-animated-banner {
   width: 100%;
   height: 450px;
-  background-image: url(../Banner/857_02-Corona_Camera001.webp);
+  background-image: url(../Banner/akavi\ banner\ 3.2.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -6903,7 +6907,7 @@ section.ms-instagram-section {
     text-align: center;
   }
   .ms-animated-banner {
-    height: 200px;
+    height: 143px;
   }
   .ms-animated-banner .ms-bnr-detail .fruit-2 {
     top: -95px;
