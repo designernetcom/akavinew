@@ -3161,10 +3161,12 @@ i.msicon.msi-star.fill {
 .header-top {
   padding: 10px 0;
   color: #777;
-  background-color: #f5f4f9;
+  background-color: #d02f1f;
 }
 .header-top .header-top-message {
   font-size: 13px;
+  font-weight: 600;
+  color: white;
 }
 
 .header-top-right-inner > div {
@@ -3372,7 +3374,7 @@ i.msicon.msi-star.fill {
 }
 
 .ms-header-bottom {
-  padding: 8px 0;
+  padding: 12px 0;
 }
 
 .ms-flex {
@@ -3392,7 +3394,7 @@ i.msicon.msi-star.fill {
   text-align: left;
 }
 .header-logo img {
-  width: 68px;
+  width: 140px;
 }
 
 .col.ms-header-logo {
@@ -3754,7 +3756,7 @@ div#ms-main-menu-desk {
   height: auto;
 }
 .ms-main-menu ul li.drop-list {
-  margin-right: 30px !important;
+  margin-right: 27px !important;
 }
 .ms-main-menu ul li.dropdown {
   position: relative;
