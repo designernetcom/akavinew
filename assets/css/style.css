@@ -3168,8 +3168,8 @@ i.msicon.msi-star.fill {
 
 .header-top {
   padding: 10px 0;
-  color: #777;
-  background-color: #f5f4f9;
+  color: #fff;
+  background-color: #D02F1F;
 }
 .header-top .header-top-message {
   font-size: 13px;
@@ -3400,7 +3400,7 @@ i.msicon.msi-star.fill {
   text-align: left;
 }
 .header-logo img {
-  width: 65px;
+  width: 140px;
 }
 
 .col.ms-header-logo {
@@ -8922,7 +8922,7 @@ body.ms-menu-open:before {
 }
 .ms-single-product .single-pro-content .ms-single-title {
   color: #17181c;
-  font-size: 22px;
+  font-size: 24px;
   text-transform: capitalize;
   margin: 0 0 20px 0;
   text-decoration: none;
