@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modular Product Card System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ========== MODULAR PRODUCT CARD SYSTEM ========== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Image Container */
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+            background: #f8f9fa;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .hover-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .hover-image {
+            opacity: 1;
+        }
+
+        /* Badges */
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        .badge-sale {
+            background: #dc3545;
+        }
+
+        .badge-new {
+            background: #28a745;
+        }
+
+        .badge-hot {
+            background: #fd7e14;
+        }
+
+        /* Labels */
+        .product-labels {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+        }
+
+        .label {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .label.veg {
+            color: #28a745;
+        }
+
+        .label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+            margin-right: 5px;
+        }
+
+        /* Product Actions */
+        .product-actions {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: #2c3e50;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Product Content */
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            text-decoration: none;
+        }
+
+        .product-title:hover {
+            color: #3498db;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Rating */
+        .rating-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            margin-right: 0.5rem;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 16px;
+            margin-right: 2px;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
+
+        .review-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Pricing */
+        .price-container {
+            margin-bottom: 1.2rem;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount-price {
+            font-size: 1.1rem;
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .discount-text {
+            font-size: 0.9rem;
+            color: #27ae60;
+            font-weight: 500;
+        }
+
+        /* Color Selection */
+        .color-selection {
+            margin-top: 1rem;
+        }
+
+        .color-options {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+            border-color: #3498db;
+        }
+
+        .color-option.active {
+            border-color: #2c3e50;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.3);
+        }
+
+        .color-option::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .color-option.active::after {
+            opacity: 1;
+        }
+
+        /* Color variants */
+        .color-black { background: #2c3e50; }
+        .color-red { background: #e74c3c; }
+        .color-blue { background: #3498db; }
+        .color-gray { background: #95a5a6; }
+        .color-white { background: #ecf0f1; border: 2px solid #bdc3c7; }
+        .color-green { background: #27ae60; }
+
+        .color-count {
+            color: #666;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        /* Add to Cart Button */
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .add-to-cart:hover {
+            background: #34495e;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .product-image-container {
+                height: 250px;
+            }
+            
+            .product-content {
+                padding: 1.2rem;
+            }
+            
+            .product-title {
+                font-size: 1rem;
+            }
+            
+            .current-price {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .product-image-container {
+                height: 220px;
+            }
+            
+            .product-content {
+                padding: 1rem;
+            }
+            
+            .product-badges .badge {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Code Display */
+        .code-section {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .code-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .code-section pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Modular Product Card System</h1>
+            <p>Copy-paste ready product cards for your e-commerce site</p>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="products-grid">
+            <!-- TEMPLATE CARD 1: Basic Card -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="product-badges">
+                        <span class="badge badge-sale">-80%</span>
+                    </div>
+                    <div class="product-labels">
+                        <span class="label veg">
+                            <span class="dot"></span>
+                            Premium
+                        </span>
+                    </div>
+                    <img class="product-image" 
+                         src="https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=400&fit=crop" 
+                         alt="Product">
+                    <img class="hover-image" 
+                         src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop" 
+                         alt="Product Hover">
+                    <div class="product-actions">
+                        <a href="#" class="action-btn" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </a>
+                        <a href="#" class="action-btn" title="Quick View">
+                            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        </a>
+                        <a href="#" class="action-btn" title="Compare">
+                            <svg viewBox="0 0 24 24"><path d="M10 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h5v2h2V1h-2v2zm0 15H5l5-6v6zm9-15h-5v2h5v13l-5-6v9h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <div class="product-category">Office Chairs</div>
+                    <h5 class="product-title">
+                        <a href="#">DA URBAN® MERLION HIGH BACK MESH CHAIR</a>
+                    </h5>
+                    <p class="product-description">
+                        Premium ergonomic chair with high-quality mesh back support, perfect for long working hours and modern office spaces.
+                    </p>
+                    <div class="rating-container">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star empty">★</span>
+                        </div>
+                        <span class="review-count">131 reviews</span>
+                    </div>
+                    <div class="price-container">
+                        <div class="price-row">
+                            <span class="original-price">Rs. 26,999.00</span>
+                            <span class="current-price">Rs. 5,155.00</span>
+                        </div>
+                        <div class="discount-price">Rs. 4,897.25 <span class="discount-text">with SPRING05</span></div>
+                    </div>
+                    <div class="color-selection">
+                        <div class="color-options">
+                            <div class="color-option color-black active" title="Black"></div>
+                            <div class="color-option color-red" title="Red"></div>
+                            <div class="color-option color-blue" title="Blue"></div>
+                            <span class="color-count">+1</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- TEMPLATE CARD 2: Minimal Card -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="product-badges">
+                        <span class="badge badge-new">New</span>
+                    </div>
+                    <img class="product-image" 
+                         src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop" 
+                         alt="Product">
+                    <div class="product-actions">
+                        <a href="#" class="action-btn" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </a>
+                        <a href="#" class="action-btn" title="Quick View">
+                            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h5 class="product-title">
+                        <a href="#">Executive Leather Chair</a>
+                    </h5>
+                    <div class="rating-container">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <span class="review-count">89 reviews</span>
+                    </div>
+                    <div class="price-container">
+                        <div class="price-row">
+                            <span class="current-price">Rs. 8,249.75</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- TEMPLATE CARD 3: Full Featured Card -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="product-badges">
+                        <span class="badge badge-hot">Hot</span>
+                        <span class="badge badge-sale">-25%</span>
+                    </div>
+                    <div class="product-labels">
+                        <span class="label veg">
+                            <span class="dot"></span>
+                            Eco-Friendly
+                        </span>
+                    </div>
+                    <img class="product-image" 
+                         src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=400&fit=crop" 
+                         alt="Product">
+                    <img class="hover-image" 
+                         src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop" 
+                         alt="Product Hover">
+                    <div class="product-actions">
+                        <a href="#" class="action-btn" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </a>
+                        <a href="#" class="action-btn" title="Quick View">
+                            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        </a>
+                        <a href="#" class="action-btn" title="Compare">
+                            <svg viewBox="0 0 24 24"><path d="M10 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h5v2h2V1h-2v2zm0 15H5l5-6v6zm9-15h-5v2h5v13l-5-6v9h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <div class="product-category">Gaming Chairs</div>
+                    <h5 class="product-title">
+                        <a href="#">Professional Gaming Chair Pro</a>
+                    </h5>
+                    <p class="product-description">
+                        Ultimate gaming chair with RGB lighting, premium leather upholstery, and advanced lumbar support system for maximum comfort.
+                    </p>
+                    <div class="rating-container">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <span class="review-count">247 reviews</span>
+                    </div>
+                    <div class="price-container">
+                        <div class="price-row">
+                            <span class="original-price">Rs. 15,999.00</span>
+                            <span class="current-price">Rs. 11,999.00</span>
+                        </div>
+                        <div class="discount-price">Rs. 11,399.05 <span class="discount-text">with SPRING05</span></div>
+                    </div>
+                    <div class="color-selection">
+                        <div class="color-options">
+                            <div class="color-option color-black active" title="Black"></div>
+                            <div class="color-option color-red" title="Red"></div>
+                            <div class="color-option color-blue" title="Blue"></div>
+                            <div class="color-option color-white" title="White"></div>
+                            <span class="color-count">+2</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Templates Section -->
+        <div class="code-section">
+            <h3>📋 Copy-Paste Template: Basic Product Card</h3>
+            <pre><code>&lt;div class="product-card"&gt;
+    &lt;div class="product-image-container"&gt;
+        &lt;div class="product-badges"&gt;
+            &lt;span class="badge badge-sale"&gt;-25%&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;img class="product-image" src="your-image.jpg" alt="Product"&gt;
+        &lt;div class="product-actions"&gt;
+            &lt;a href="#" class="action-btn" title="Add to Wishlist"&gt;❤️&lt;/a&gt;
+            &lt;a href="#" class="action-btn" title="Quick View"&gt;👁️&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="product-content"&gt;
+        &lt;h5 class="product-title"&gt;
+            &lt;a href="#"&gt;Your Product Name&lt;/a&gt;
+        &lt;/h5&gt;
+        &lt;div class="rating-container"&gt;
+            &lt;div class="stars"&gt;
+                &lt;span class="star"&gt;★&lt;/span&gt;
+                &lt;span class="star"&gt;★&lt;/span&gt;
+                &lt;span class="star"&gt;★&lt;/span&gt;
+                &lt;span class="star"&gt;★&lt;/span&gt;
+                &lt;span class="star empty"&gt;★&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;span class="review-count"&gt;89 reviews&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="price-container"&gt;
+            &lt;div class="price-row"&gt;
+                &lt;span class="original-price"&gt;Rs. 15,999.00&lt;/span&gt;
+                &lt;span class="current-price"&gt;Rs. 11,999.00&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;button class="add-to-cart"&gt;Add to Cart&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="code-section">
+            <h3>🎨 CSS Classes Reference</h3>
+            <p><strong>Badge Types:</strong> <code>badge-sale</code>, <code>badge-new</code>, <code>badge-hot</code></p>
+            <p><strong>Color Options:</strong> <code>color-black</code>, <code>color-red</code>, <code>color-blue</code>, <code>color-gray</code>, <code>color-white</code>, <code>color-green</code></p>
+            <p><strong>Card Layouts:</strong> Use <code>products-grid</code> container with auto-responsive grid</p>
+        </div>
+    </div>
+
+    <script>
+        // Color selection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from siblings
+                    const siblings = this.parentNode.querySelectorAll('.color-option');
+                    siblings.forEach(sibling => sibling.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Add selection animation
+                    this.style.transform = 'scale(1.25)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const originalText = this.textContent;
+                    this.textContent = 'Added!';
+                    this.style.background = '#27ae60';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                    }, 2000);
+                });
+            });
+
+            // Wishlist functionality
+            const wishlistButtons

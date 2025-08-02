@@ -2749,14 +2749,14 @@ i.msicon.msi-star.fill {
   opacity: 1;
   right: 10px;
 }
-.ms-product-inner:hover .ms-pro-image .image img {
+ .ms-pro-image:hover .image img {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
 }
-.ms-product-inner:hover .ms-pro-image .image img:not(:last-child) {
+.ms-pro-image:hover .image img:not(:last-child) {
   opacity: 0;
 }
-.ms-product-inner:hover .ms-pro-image .image img.hover-image {
+ .ms-pro-image:hover .image img.hover-image {
   opacity: 1;
 }
 .ms-product-inner .ms-pro-content {
@@ -2800,11 +2800,11 @@ i.msicon.msi-star.fill {
 }
 .ms-product-inner .ms-pro-content .ms-pro-title a {
   text-decoration: none;
-  color: #777;
+  color: black;
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 20px;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.85px;
   text-transform: capitalize;
   white-space: nowrap;
