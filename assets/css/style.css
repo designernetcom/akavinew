@@ -108,6 +108,17 @@ Copyright 2024
   font-style: normal;
 }
 @font-face {
+  font-family: 'Urbanist, sans-serif';
+  src: url('../fonts/Urbanist-SemiBoldItalic.ttf') format('truetype');
+      
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+
+
+@font-face {
   font-family: "Poppins, sans-serif";
   src: url("../fonts/poppins/Poppins-SemiBold.ttf") format("truetype");
   font-weight: 600;
@@ -2555,8 +2566,8 @@ i.msicon.msi-star.fill {
 .ms-product-inner {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  border: 1px solid #eee;
-  border-radius: 3px;
+  border: 1px solid #cdc9c9;
+  border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
 }
@@ -2619,27 +2630,19 @@ i.msicon.msi-star.fill {
   background-color: #ff9898;
 }
 .ms-product-inner .ms-pro-image .flags {
-  right: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  padding: 0;
-  text-transform: uppercase;
-  position: absolute;
+   position: absolute;
   top: 10px;
-  left: 10px;
-  z-index: 2;
+  right: 10px;
+  z-index: 10;
+  border-radius: 4px;
+  padding: 4px 8px;
 }
 .ms-product-inner .ms-pro-image .flags span {
   padding: 5px 10px;
   font-size: 11px;
   font-weight: 500;
   line-height: 12px;
-  text-align: left;
+  text-align: right !important;
   text-transform: uppercase;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2802,8 +2805,8 @@ i.msicon.msi-star.fill {
   text-decoration: none;
   color: black;
   display: block;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 700;
   letter-spacing: 0.85px;
   text-transform: capitalize;
@@ -8779,7 +8782,7 @@ body.ms-menu-open:before {
   width: 47.3%;
 }
 .ms-single-product .single-pro-img .single-product-scroll {
-  padding: 15px;
+  /* padding: 15px; */
   position: sticky;
   top: 30px;
   background: #f5f4f9;
@@ -8827,10 +8830,10 @@ body.ms-menu-open:before {
   width: 52.7%;
 }
 .ms-single-product .single-pro-img-no-sidebar {
-  width: 40%;
+  width: 50%;
 }
 .ms-single-product .single-pro-desc-no-sidebar {
-  width: 60%;
+  width: 50%;
 }
 .ms-single-product .space-6 > div {
   margin-top: 30px;
@@ -8922,14 +8925,14 @@ body.ms-menu-open:before {
 }
 .ms-single-product .single-pro-content .ms-single-title {
   color: #17181c;
-  font-size: 24px;
+  font-size: 30px;
   text-transform: capitalize;
   margin: 0 0 20px 0;
   text-decoration: none;
   display: block;
   font-family: "Poppins, sans-serif";
-  font-weight: 500;
-  line-height: 35px;
+  font-weight: 600;
+  line-height: 48px;
   letter-spacing: 0.02rem;
 }
 .ms-single-product .single-pro-content p {
@@ -8994,8 +8997,8 @@ body.ms-menu-open:before {
 }
 .ms-single-product .single-pro-content .ms-single-list ul li {
   margin: 10px 0;
-  color: #777;
-  font-size: 14px;
+  color: #3f3c3c;
+  font-size: 16px;
   list-style: circle;
 }
 .ms-single-product .single-pro-content .ms-single-list ul li strong {
@@ -9038,7 +9041,7 @@ body.ms-menu-open:before {
   margin-bottom: 15px;
   color: #17181c;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 27px;
   line-height: 32px;
   font-family: "Poppins, sans-serif";
   letter-spacing: 0;
@@ -9047,7 +9050,7 @@ body.ms-menu-open:before {
   margin-left: 15px;
   color: #3e9172;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
 }
 .ms-single-product .single-pro-content .ms-single-price .mrp {
   color: #777;
@@ -9184,25 +9187,20 @@ body.ms-menu-open:before {
   border-left: 1px solid #eee;
 }
 .ms-single-product .single-pro-content .ms-single-qty .ms-single-cart .ms-btn-2 {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 40px;
-  line-height: 50px;
+  line-height: 40px; /* match height for proper vertical centering */
   text-align: center;
   font-size: 14px;
-  margin: 0 10px;
+  margin: 0;
   text-transform: uppercase;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  min-width: 160px;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* <-- Full width of container */
   letter-spacing: 0.02rem;
   border: 0;
 }
+
 .ms-single-product .single-pro-content .ms-single-qty .ms-single-cart .ms-btn-2 svg {
   margin-right: 8px;
 }
