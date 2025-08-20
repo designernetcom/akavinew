@@ -3064,7 +3064,7 @@ i.msicon.msi-star-o {
 i.msicon.msi-star {
   color: #777;
   float: left;
-  font-size: 14px;
+  font-size: 15px;
   margin-right: 3px;
 }
 
@@ -9319,7 +9319,7 @@ body.ms-menu-open:before {
 .ms-single-product i.msicon.msi-star-o {
   color: #b2b2b2;
   float: left;
-  font-size: 14px;
+  font-size: 20px;
 }
 .ms-single-product .ms-single-pro-tab-nav {
   width: 100%;
@@ -9449,8 +9449,8 @@ body.ms-menu-open:before {
   color: #777;
 }
 .ms-single-product .ms-single-pro-tab-content .ms-single-pro-tab-moreinfo li span {
-  margin: 0 25px 0 0;
-  min-width: 150px;
+  /* margin: 0 25px 0 0;
+  min-width: 150px; */
   font-size: 15px;
   color: #17181c !important;
   display: inline-block;
