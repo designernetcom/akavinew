@@ -264,6 +264,29 @@
                 </div>
             </div>
         </div>
+
+        <style>
+            .ms-header-cat {
+                position: relative;
+                /* normal flow initially */
+                width: 100%;
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+
+            .ms-header-cat.sticky {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: #fff;
+                /* so content behind isn’t visible */
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+        <script>
+
+        </script>
+
         <!-- Header menu End -->
 
         <!-- Mobile Menu sidebar Start -->
@@ -762,8 +785,126 @@
                                             <div class="product-main-image">
                                                 <img id="mainProductImage"
                                                     src="./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/1.jpg"
-                                                    alt="Main Product" onclick="openFullscreen(this)">
+                                                    alt="Main Product">
+
+                                                <!-- Left & Right Buttons -->
+                                                <button class="img-nav-btn prev-btn">&#10094;</button>
+                                                <button class="img-nav-btn next-btn">&#10095;</button>
                                             </div>
+                                            <style>
+                                                .product-main-image {
+                                                    position: relative;
+                                                    display: inline-block;
+                                                }
+
+                                                .product-main-image img {
+                                                    display: block;
+                                                    width: 100%;
+                                                    height: auto;
+                                                    border-radius: 6px;
+                                                }
+
+                                                .img-nav-btn {
+                                                    position: absolute;
+                                                    top: 50%;
+                                                    transform: translateY(-50%);
+                                                    background: #8f8e8c;
+                                                    color: #ffffff;
+                                                    border: none;
+                                                    padding: 10px 20px;
+                                                    cursor: pointer;
+                                                    font-size: 20px;
+                                                    border-radius: 50%;
+                                                    opacity: 0;
+                                                    /* hidden initially */
+                                                    visibility: hidden;
+                                                    z-index: 10;
+                                                    transition: opacity 0.3s ease, visibility 0.3s ease, background 0.3s ease;
+                                                }
+
+                                                .img-nav-btn:hover {
+                                                    background: rgba(221, 185, 25, 0.8);
+                                                }
+
+                                                .prev-btn {
+                                                    left: 10px;
+                                                }
+
+                                                .next-btn {
+                                                    right: 10px;
+                                                }
+
+                                                /* Fade in on hover */
+                                                .product-main-image:hover .img-nav-btn {
+                                                    opacity: 1;
+                                                    visibility: visible;
+                                                }
+
+
+                                                .img-nav-btn:hover {
+                                                    background: rgba(0, 0, 0, 0.8);
+                                                }
+
+                                                .prev-btn {
+                                                    left: 10px;
+                                                }
+
+                                                .next-btn {
+                                                    right: 10px;
+                                                }
+
+                                                /* Show buttons only on hover */
+                                                .product-main-image:hover .img-nav-btn {
+                                                    display: block;
+                                                }
+                                            </style>
+
+                                         <script>
+  const images = [
+    "./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/1.jpg",
+    "./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/2.jpg",
+    "./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/3.webp",
+    "./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/4.webp",
+    "./assets/1. LUXURY SERIES (50)/1. Armani Luxury High Back Chair [Green]/5.webp"
+  ];
+
+  let currentIndex = 0;
+  const mainImage = document.getElementById("mainProductImage");
+  const prevBtn = document.querySelector(".prev-btn");
+  const nextBtn = document.querySelector(".next-btn");
+  const thumbnails = document.querySelectorAll(".product-thumbnails img");
+
+  function updateActiveThumbnail(index) {
+    thumbnails.forEach((thumb, i) => {
+      thumb.classList.toggle("active", i === index);
+    });
+  }
+
+  function showImage(index) {
+    if (index < 0) index = images.length - 1;
+    if (index >= images.length) index = 0;
+    currentIndex = index;
+    mainImage.src = images[currentIndex];
+    updateActiveThumbnail(currentIndex);
+  }
+
+  // Button clicks
+  prevBtn.addEventListener("click", () => showImage(currentIndex - 1));
+  nextBtn.addEventListener("click", () => showImage(currentIndex + 1));
+
+  // Thumbnail clicks
+  thumbnails.forEach((thumb, i) => {
+    thumb.addEventListener("click", () => {
+      currentIndex = i;
+      showImage(currentIndex);
+    });
+  });
+
+  // Initialize
+  updateActiveThumbnail(currentIndex);
+</script>
+
+
 
                                         </div>
 
@@ -776,7 +917,7 @@
                                         <style>
                                             .product-gallery {
                                                 display: flex;
-                                                gap: 15px;
+                                                gap: 30px;
                                                 align-items: flex-start;
                                             }
 
@@ -789,7 +930,7 @@
                                             }
 
                                             .product-thumbnails img {
-                                                width: 100%;
+                                                width: 113%;
                                                 border: 2px solid transparent;
                                                 border-radius: 6px;
                                                 cursor: pointer;
@@ -903,37 +1044,7 @@
                                             }
                                         </style>
 
-                                        <script>
-                                            function changeImage(thumbnail) {
-                                                let mainImage = document.getElementById("mainProductImage");
-                                                let thumbnails = document.querySelectorAll(".product-thumbnails img");
 
-                                                thumbnails.forEach(img => img.classList.remove("active"));
-                                                thumbnail.classList.add("active");
-
-                                                mainImage.classList.add("slide-animation");
-                                                setTimeout(() => {
-                                                    mainImage.src = thumbnail.src;
-                                                    mainImage.classList.remove("slide-animation");
-                                                }, 300);
-                                            }
-
-                                            function openFullscreen(img) {
-                                                document.getElementById("imageModal").style.display = "block";
-                                                document.getElementById("fullscreenImage").src = img.src;
-                                            }
-
-                                            function closeFullscreen() {
-                                                document.getElementById("imageModal").style.display = "none";
-                                            }
-
-                                            // Close modal with ESC
-                                            document.addEventListener("keydown", function (e) {
-                                                if (e.key === "Escape") {
-                                                    closeFullscreen();
-                                                }
-                                            });
-                                        </script>
                                     </section>
 
 
@@ -951,7 +1062,8 @@
                                                 <i class="msicon msi-star fill" style="font-size: 20px;"></i>
                                                 <i class="msicon msi-star fill" style="font-size: 20px;"></i>
                                                 <i class="msicon msi-star fill" style="font-size: 20px;"></i>
-                                                <i class="msicon msi-star-o"></i>
+                                                <i class="msicon msi-star fill" style="font-size: 20px;"></i>
+
                                             </div>
                                             <!-- <span class="ms-read-review">
                                                 |&nbsp;&nbsp;<a href="#ms-spt-nav-review">992 Ratings</a>
@@ -964,17 +1076,12 @@
                                                         style="background-color: #B2190A; color: white; padding: 4px; border-radius: 10px;">SAVE
                                                         27%</span></div>
                                                 <div class="mrp" style="font-size: 22px; font-weight: 500;">
-                                                    <span style="font-size: 21px; font-weight: 600;">RS 97990</span>
+                                                    <span style="font-size: 21px; font-weight: 600;">Rs.
+                                                        97,990.00</span>
                                                 </div>
                                             </div>
-                                            <!-- <div class="ms-single-stoke">                                                
-                                                <span class="ms-single-sku">SKU#: WH12</span>
-                                                <span class="ms-single-ps-title">IN STOCK</span>
-                                            </div> -->
+
                                         </div>
-                                        <!-- <div class="ms-single-desc">Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                            text ever since the 1990.</div> -->
 
                                         <div class="ms-single-list">
                                             <ul>
@@ -989,10 +1096,10 @@
                                             </ul>
                                         </div>
                                         <div class="product-meta">
-                                            <div class="availability">
+                                            <!-- <div class="availability">
                                                 <span class="label">Available:</span>
                                                 <span class="status">In Stock </span>
-                                            </div>
+                                            </div> -->
 
                                             <div class="color-options">
                                                 <span class="label">Color:</span>
@@ -1080,7 +1187,101 @@
                                                 <button class="product-btn btn-light">BULK ENQUIRY</button>
                                             </div>
 
-                                            <button class="product-btn btn-dark">Enquire Now</button>
+                                            <!-- Enquire Now Button -->
+                                            <button type="button" class="product-btn btn-dark" data-bs-toggle="modal"
+                                                data-bs-target="#enquireModal">
+                                                Enquire Now
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="enquireModal" tabindex="-1"
+                                                aria-labelledby="enquireModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content enquiry-form">
+
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header border-0">
+                                                            <h5 class="modal-title fw-bold" id="enquireModalLabel">✨
+                                                                Enquiry Form</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <!-- Modal Body -->
+                                                        <div class="modal-body">
+                                                            <form id="enquiryForm">
+                                                                <div class="mb-3">
+                                                                    <label for="name" class="form-label">Full
+                                                                        Name</label>
+                                                                    <input type="text" class="form-control modern-input"
+                                                                        id="name" placeholder="Enter your name"
+                                                                        required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="email" class="form-label">Email
+                                                                        Address</label>
+                                                                    <input type="email"
+                                                                        class="form-control modern-input" id="email"
+                                                                        placeholder="you@example.com" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="message"
+                                                                        class="form-label">Message</label>
+                                                                    <textarea class="form-control modern-input"
+                                                                        id="message" rows="3"
+                                                                        placeholder="Write your enquiry..."
+                                                                        required></textarea>
+                                                                </div>
+                                                                <button type="submit"
+                                                                    class="btn btn-dark w-100 modern-btn">🚀
+                                                                    Submit</button>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Bootstrap JS -->
+                                            <script
+                                                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+                                            <!-- Custom Styling -->
+                                            <style>
+                                                .enquiry-form {
+                                                    border-radius: 20px;
+                                                    background: #fff;
+                                                    /* ✅ white background */
+                                                    z-index: 1055;
+                                                    /* ✅ keeps it above backdrop */
+                                                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+                                                    padding: 20px;
+                                                }
+
+                                                .modern-input {
+                                                    border-radius: 12px;
+                                                    border: 1px solid #ddd;
+                                                    padding: 12px;
+                                                    transition: all 0.3s ease-in-out;
+                                                }
+
+                                                .modern-input:focus {
+                                                    border-color: #000;
+                                                    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+                                                }
+
+                                                .modern-btn {
+                                                    border-radius: 12px;
+                                                    padding: 12px;
+                                                    font-weight: 600;
+                                                    transition: all 0.3s ease;
+                                                }
+
+                                                .modern-btn:hover {
+                                                    transform: scale(1.02);
+                                                }
+                                            </style>
+
                                         </div>
 
 
@@ -1124,7 +1325,8 @@
 
                     <div class="ms-single-pro-tab">
                         <div class="ms-single-pro-tab-wrapper">
-                            <div class="ms-single-pro-tab-nav">
+                            <div class="ms-single-pro-tab-nav"
+                                style="display: flex; align-items: center; justify-content: center;">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab"
@@ -1141,47 +1343,68 @@
                                     </li>
                                 </ul>
                             </div>
+
+
                             <div class="tab-content  ms-single-pro-tab-content">
                                 <div id="ms-spt-nav-details" class="tab-pane fade show active">
                                     <div class="ms-single-pro-tab-desc">
                                         <div class="specifications-section">
 
                                             <!-- Product Specifications -->
-                                            <div class="spec-box">
-                                                <h3>Product Specifications -</h3>
-                                                <ul>
-                                                    <li><strong>Luxurious Velvet :</strong> Premium Velvet upholstery
-                                                        with fine stitch detail.</li>
-                                                    <li><strong>Spacious Seating :</strong> Wide, spacious seating with
-                                                        thick padding, Armrests provide extra relaxation and comfort.
-                                                    </li>
-                                                    <li><strong>Strong and Durable :</strong> Built with a durable
-                                                        wooden frame and heavy-duty metal legs featuring a rose gold
-                                                        finish.</li>
-                                                    <li><strong>Wide Colour Selection :</strong> Available in 9 stunning
-                                                        velvet colours.</li>
-                                                    <li><strong>Versatile Use :</strong> Ideal for various settings,
-                                                        including dining rooms, kitchens, restaurants, cafes, waiting
-                                                        rooms, and living rooms. Perfect as accent chairs for bedrooms,
-                                                        interview rooms, and podcasts.</li>
-                                                </ul>
+                                            <div class="spec-box"
+                                                style="display: flex; align-items: center; justify-content: center;">
+                                                <div>
+                                                    <h3 style="color: #000; font-weight: 700;">Product Specifications -
+                                                    </h3>
+                                                    <ul>
+                                                        <li style="color: rgb(48, 48, 48);"><strong>Luxurious Velvet
+                                                                :</strong> Premium Velvet upholstery
+                                                            with fine stitch detail.</li>
+                                                        <li style="color: rgb(48, 48, 48);"><strong>Spacious Seating
+                                                                :</strong> Wide, spacious seating with
+                                                            thick padding, Armrests provide extra relaxation and
+                                                            comfort.
+                                                        </li>
+                                                        <li style="color: rgb(48, 48, 48);"><strong>Strong and Durable
+                                                                :</strong> Built with a durable
+                                                            wooden frame and heavy-duty metal legs featuring a rose gold
+                                                            finish.</li>
+                                                        <li style="color: rgb(48, 48, 48);"><strong>Wide Colour
+                                                                Selection :</strong> Available in 9 stunning
+                                                            velvet colours.</li>
+                                                        <li style="color: rgb(48, 48, 48);"><strong>Versatile Use
+                                                                :</strong> Ideal for various settings,
+                                                            including dining rooms, kitchens, restaurants, cafes,
+                                                            waiting
+                                                            rooms, and living rooms. Perfect as accent chairs for
+                                                            bedrooms,
+                                                            interview rooms, and podcasts.</li>
+                                                    </ul>
+                                                </div>
+
                                             </div>
 
                                             <!-- Technical Specifications -->
-                                            <div class="spec-box">
-                                                <h3>Technical Specifications</h3>
-                                                <ul>
-                                                    <li><strong>Frame Material:</strong> Glass-filled nylon structure
-                                                    </li>
-                                                    <li><strong>Mechanism:</strong> 2:1 Multi-Lock Synchro Mechanism
-                                                    </li>
-                                                    <li><strong>Gas Lift:</strong> BIFMA Certified Class 4</li>
-                                                    <li><strong>Base:</strong> Heavy-duty metal base</li>
-                                                    <li><strong>Wheels:</strong> 60mm dual wheels</li>
-                                                    <li><strong>Swivel:</strong> 360° swivel</li>
-                                                    <li><strong>Maximum Weight Capacity:</strong> Up to 120 kg</li>
-                                                    <li><strong>Height Suitability:</strong> 5 ft to 5 ft 10 in</li>
-                                                </ul>
+                                            <div class="spec-box"
+                                                style="display: flex !important; justify-content: center !important; align-items: center !important;">
+                                                <div>
+                                                    <h3 style="color: #000; font-weight: 700;">Technical Specifications
+                                                    </h3>
+                                                    <ul>
+                                                        <li><strong>Frame Material:</strong> Glass-filled nylon
+                                                            structure
+                                                        </li>
+                                                        <li><strong>Mechanism:</strong> 2:1 Multi-Lock Synchro Mechanism
+                                                        </li>
+                                                        <li><strong>Gas Lift:</strong> BIFMA Certified Class 4</li>
+                                                        <li><strong>Base:</strong> Heavy-duty metal base</li>
+                                                        <li><strong>Wheels:</strong> 60mm dual wheels</li>
+                                                        <li><strong>Swivel:</strong> 360° swivel</li>
+                                                        <li><strong>Maximum Weight Capacity:</strong> Up to 120 kg</li>
+                                                        <li><strong>Height Suitability:</strong> 5 ft to 5 ft 10 in</li>
+                                                    </ul>
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -1199,7 +1422,7 @@
                                             }
 
                                             .spec-box h3 {
-                                                font-size: 18px;
+                                                font-size: 19px;
                                                 font-weight: 600;
                                                 margin-bottom: 15px;
                                                 color: #000;
@@ -1333,6 +1556,142 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Carousel Navigation Arrows */
+        .carousel-nav-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-arrow:hover {
+            background-color: #3E9172;
+            border-color: #3E9172;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-arrow-left {
+            left: -20px;
+        }
+
+        .carousel-arrow-right {
+            right: -20px;
+        }
+
+        .carousel-arrow i {
+            font-size: 18px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .carousel-arrow:hover i {
+            color: white;
+        }
+
+        .carousel-arrow.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .carousel-arrow {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .carousel-arrow i {
+                font-size: 14px;
+            }
+            
+            .carousel-arrow-left {
+                left: -10px;
+            }
+            
+            .carousel-arrow-right {
+                right: -10px;
+            }
+        }
+
+        /* Flipkart-style Zoom Effect for Product Images */
+        .product-main-image {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .product-main-image img,
+        #mainProductImage {
+            transition: transform 0.4s ease-in-out;
+            cursor: zoom-in;
+        }
+
+        .product-main-image:hover img,
+        .product-main-image:hover #mainProductImage {
+            transform: scale(1.3);
+        }
+
+        /* Zoom effect for related products */
+        .ms-pro-image {
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .ms-pro-image img.main-image,
+        .ms-pro-image img.hover-image {
+            transition: transform 0.3s ease-in-out;
+            cursor: zoom-in;
+        }
+
+        .ms-pro-image:hover img.main-image,
+        .ms-pro-image:hover img.hover-image {
+            transform: scale(1.2);
+        }
+
+        /* Zoom effect for quantity slider images */
+        .qty-slide {
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .qty-slide img {
+            transition: transform 0.3s ease-in-out;
+            cursor: zoom-in;
+        }
+
+        .qty-slide:hover img {
+            transform: scale(1.15);
+        }
+
+        /* Smooth zoom out on mouse leave */
+        .product-main-image img:not(:hover),
+        .ms-pro-image img:not(:hover),
+        .qty-slide img:not(:hover) {
+            transform: scale(1);
+        }
     </style>
     <section class="ms-service-section padding-tb-30">
         <div class="container">
@@ -1395,7 +1754,16 @@
             <div class="row p-t-15">
                 <div class="ms-new-product col-lg-12">
                     <div class="section-bg-color section-space-p30 main-border-radius">
-                        <div class="ms-product-block m-minus-15">
+                        <div class="ms-product-block m-minus-15 position-relative">
+                            <!-- Navigation Arrows -->
+                            <div class="carousel-nav-arrows">
+                                <button class="carousel-arrow carousel-arrow-left" id="relatedProductsPrev">
+                                    <i class="msicon msi-chevron-left"></i>
+                                </button>
+                                <button class="carousel-arrow carousel-arrow-right" id="relatedProductsNext">
+                                    <i class="msicon msi-chevron-right"></i>
+                                </button>
+                            </div>
                             <div class="new-product-carousel owl-carousel">
                                 <div class="ms-product-content">
                                     <div class="ms-product-inner">
@@ -1538,7 +1906,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               <div class="ms-product-content">
+                                <div class="ms-product-content">
                                     <div class="ms-product-inner">
                                         <!-- Product Image -->
                                         <div class="ms-pro-image-outer">
@@ -1678,7 +2046,7 @@
                                         </div>
                                     </div>
                                 </div>
-                              <div class="ms-product-content">
+                                <div class="ms-product-content">
                                     <div class="ms-product-inner">
                                         <!-- Product Image -->
                                         <div class="ms-pro-image-outer">
@@ -2149,7 +2517,7 @@
     <div class="ms-compare-notify"></div>
 
     <!-- Back to top  -->
-   <!-- <a class="ms-back-to-top"></a> -->
+    <!-- <a class="ms-back-to-top"></a> -->
 
     <!-- Features sidebar  -->
     <div class="ms-features-sidebar-overlay"></div>
@@ -2251,6 +2619,70 @@
 
     <!-- Main Js -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Related Products Carousel Navigation Script -->
+    <script>
+        $(document).ready(function() {
+            // Initialize the Owl Carousel
+            var relatedProductsCarousel = $('.new-product-carousel').owlCarousel({
+                loop: false,
+                margin: 15,
+                nav: false,
+                dots: false,
+                autoplay: false,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    900: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 4
+                    }
+                }
+            });
+            
+            // Custom navigation buttons functionality
+            $('#relatedProductsPrev').click(function() {
+                relatedProductsCarousel.trigger('prev.owl.carousel', [300]);
+            });
+            
+            $('#relatedProductsNext').click(function() {
+                relatedProductsCarousel.trigger('next.owl.carousel', [300]);
+            });
+            
+            // Show/hide navigation arrows based on carousel state
+            relatedProductsCarousel.on('changed.owl.carousel', function(event) {
+                var current = event.item.index;
+                var itemCount = event.item.count;
+                var visibleItems = event.page.size;
+                
+                // Hide left arrow if at the beginning
+                if (current === 0) {
+                    $('#relatedProductsPrev').addClass('disabled');
+                } else {
+                    $('#relatedProductsPrev').removeClass('disabled');
+                }
+                
+                // Hide right arrow if at the end
+                if (current >= itemCount - visibleItems) {
+                    $('#relatedProductsNext').addClass('disabled');
+                } else {
+                    $('#relatedProductsNext').removeClass('disabled');
+                }
+            });
+            
+            // Initialize arrow states
+            $('#relatedProductsPrev').addClass('disabled');
+            if ($('.new-product-carousel .ms-product-content').length <= 4) {
+                $('#relatedProductsNext').addClass('disabled');
+            }
+        });
+    </script>
 </body>
 
 
